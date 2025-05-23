@@ -32,7 +32,7 @@ const page = () => {
           {dummyInterviews.map((interview) => {
             return <InterviewCard key={`${interview.id}-${interview.userId}`} {...interview}/>;
           })}
-          <p>You haven&apos;t taken any interviews yet</p>
+          {/* <p>You haven&apos;t taken any interviews yet</p> */}
         </div>
       </section>
       <section className="flex flex-col gap-6 mt-8">
