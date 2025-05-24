@@ -35,3 +35,5 @@ jobs:
         FIREBASE_PROJECT_ID: ci-dummy-project
         FIREBASE_CLIENT_EMAIL: ci-dummy@example.com
         FIREBASE_PRIVATE_KEY: '{"type":"service_account"}'
+        NEXT_PUBLIC_VAPI_WEB_TOKEN: dummy-key
+        GOOGLE_GENERATIVE_AI_API_KEY: dummy-ai-key
