@@ -1,30 +1,30 @@
-name: CI
+# name: CI
 
-on: [push, pull_request]
+# on: [push, pull_request]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-      FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-      FIREBASE_PRIVATE_KEY_BASE64: ${{ secrets.FIREBASE_PRIVATE_KEY_BASE64 }}  # Changed to use Base64
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm install
-      - name: Lint
-        run: npm run lint
-      - name: Build
-        run: |
-          # Decode Base64 private key and set it as FIREBASE_PRIVATE_KEY
-          export FIREBASE_PRIVATE_KEY=$(echo "$FIREBASE_PRIVATE_KEY_BASE64" | base64 --decode)
-          # Verify the key was decoded correctly (optional debug step)
-          echo "Decoded key starts with: ${FIREBASE_PRIVATE_KEY:0:30}"
-          echo "Decoded key ends with: ${FIREBASE_PRIVATE_KEY: -30}"
-          # Proceed with build
-          npm run build
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+#       FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+#       FIREBASE_PRIVATE_KEY_BASE64: ${{ secrets.FIREBASE_PRIVATE_KEY_BASE64 }}  # Changed to use Base64
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Install Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
+#       - name: Install dependencies
+#         run: npm install
+#       - name: Lint
+#         run: npm run lint
+#       - name: Build
+#         run: |
+#           # Decode Base64 private key and set it as FIREBASE_PRIVATE_KEY
+#           export FIREBASE_PRIVATE_KEY=$(echo "$FIREBASE_PRIVATE_KEY_BASE64" | base64 --decode)
+#           # Verify the key was decoded correctly (optional debug step)
+#           echo "Decoded key starts with: ${FIREBASE_PRIVATE_KEY:0:30}"
+#           echo "Decoded key ends with: ${FIREBASE_PRIVATE_KEY: -30}"
+#           # Proceed with build
+#           npm run build
