@@ -8,7 +8,7 @@ jobs:
     env:
       FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
       FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-      FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+      FIREBASE_PRIVATE_KEY: "${{ secrets.FIREBASE_PRIVATE_KEY }}"
     steps:
       - uses: actions/checkout@v3
       - name: Install Node.js
@@ -20,4 +20,5 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Build
-        run: npm run build
+        run: |
+          FIREBASE_PRIVATE_KEY="${FIREBASE_PRIVATE_KEY//\\n/$'\n'}" npm run build
