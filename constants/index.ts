@@ -1,200 +1,220 @@
-import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
+import { CreateAssistantDTO, CreateWorkflowDTO } from "@vapi-ai/web/dist/api";
 import { z } from "zod";
 
-export const generator = {
-  name: "Generate Interview",
-  clientMessages: [],    // Add this
-  serverMessages: [],    // Add this
-  nodes: [
+export const generator: CreateWorkflowDTO = {
+  "name": "interview-genius-workflow",
+  "nodes": [
     {
-      name: "start",
-      type: "conversation",
-      isStart: true,
-      metadata: {
-        position: {
-          x: 0,
-          y: 0,
-        },
+      "name": "start",
+      "type": "conversation",
+      "isStart": true,
+      "metadata": {
+        "position": {
+          "x": -452.9988279206251,
+          "y": -141.12188482425515
+        }
       },
-      prompt:
-        "Speak first. Greet the user and help them create a new AI Interviewer",
-      voice: {
-        model: "aura-2",
-        voiceId: "thalia",
-        provider: "deepgram",
+      "prompt": "Greet the user and help them create a new AI interviewer",
+      "model": {
+        "provider": "openai",
+        "model": "gpt-4o",
+        "temperature": 0.7,
+        "maxTokens": 1000
       },
-      variableExtractionPlan: {
-        output: [
+      "voice": {
+        "model": "aura-2",
+        "voiceId": "thalia",
+        "provider": "deepgram"
+      },
+      "variableExtractionPlan": {
+        "output": [
           {
-            title: "level",
-            description: "The job experience level.",
-            type: "string",
-            enum: ["entry", "mid", "senior"],
-          },
-          {
-            title: "amount",
-            description: "How many questions would you like to generate?",
-            type: "number",
-            enum: [],
-          },
-          {
-            title: "techstack",
-            description:
-              "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on...",
-            type: "string",
-            enum: [],
+            "title": "level",
+            "description": "The job experience level. ",
+            "type": "string",
+            "enum": [
+              "entry",
+              "mid",
+              "senior",
+              "staff"
+            ]
           },
           {
-            title: "role",
-            description:
-              "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
-            type: "string",
-            enum: [],
+            "title": "amount",
+            "description": "How many questions would you like me to generate? ",
+            "type": "number",
+            "enum": []
           },
           {
-            title: "type",
-            description: "What type of the interview should it be? ",
-            type: "string",
-            enum: ["behavioural", "technical", "mixed"],
+            "title": "techstack",
+            "description": "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on…",
+            "type": "string",
+            "enum": []
           },
-        ],
+          {
+            "title": "role",
+            "description": "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX, Product Engineer?",
+            "type": "string",
+            "enum": []
+          },
+          {
+            "title": "type",
+            "description": "What type of the interview should it be?",
+            "type": "string",
+            "enum": [
+              "technical",
+              "behavioural",
+              "mixed"
+            ]
+          }
+        ]
       },
+      "messagePlan": {
+        "firstMessage": "Hey there!"
+      }
     },
     {
-      name: "apiRequest_1747470739045",
-      type: "apiRequest",
-      metadata: {
-        position: {
-          x: -16.075937072883846,
-          y: 703.623428447121,
-        },
+      "name": "hangup_1747512399374",
+      "type": "hangup",
+      "metadata": {
+        "position": {
+          "x": -356.9590563226934,
+          "y": 1006.8513660186337
+        }
       },
-      method: "POST",
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
-      headers: {
-        type: "object",
-        properties: {},
-      },
-      body: {
-        type: "object",
-        properties: {
-          role: {
-            type: "string",
-            description: "",
-            value: "{{ role }}",
-          },
-          level: {
-            type: "string",
-            description: "",
-            value: "{{ level }}",
-          },
-          type: {
-            type: "string",
-            description: "",
-            value: "{{ type }}",
-          },
-          amount: {
-            type: "number",
-            description: "",
-            value: "{{ amount }}",
-          },
-          userid: {
-            type: "string",
-            description: "",
-            value: "{{ userid }}",
-          },
-          techstack: {
-            type: "string",
-            description: "",
-            value: "{{ techstack }}",
-          },
-        },
-      },
-      output: {
-        type: "object",
-        properties: {},
-      },
-      mode: "blocking",
-      hooks: [],
+      "messagePlan": {
+        "firstMessage": "Alright, have a nice day!"
+      }
     },
     {
-      name: "conversation_1747721261435",
-      type: "conversation",
-      metadata: {
-        position: {
-          x: -17.547788169718615,
-          y: 1003.3409337989506,
-        },
+      "name": "conversation_1748201376975",
+      "type": "conversation",
+      "metadata": {
+        "position": {
+          "x": -449.20642025150823,
+          "y": 223.9144811389561
+        }
       },
-      prompt:
-        "Thank the user for the conversation and inform them that the interview was generated successfully.",
-      voice: {
-        provider: "deepgram",
-        voiceId: "thalia",
-        model: "aura-2",
+      "prompt": "Say that the Interview will be generated shortly.",
+      "model": {
+        "provider": "openai",
+        "model": "gpt-4o",
+        "temperature": 0.7,
+        "maxTokens": 1000
       },
+      "messagePlan": {
+        "firstMessage": ""
+      }
     },
     {
-      name: "conversation_1747744490967",
-      type: "conversation",
-      metadata: {
-        position: {
-          x: -11.165436030430953,
-          y: 484.94857971060617,
+      "name": "apiRequest_1748201470702",
+      "type": "tool",
+      "metadata": {
+        "position": {
+          "x": -449.20642025150823,
+          "y": 473.9144811389561
+        }
+      },
+      "tool": {
+        "type": "apiRequest",
+        "function": {
+          "name": "untitled_tool",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
         },
-      },
-      prompt: "Say that the Interview will be generated shortly.",
-      voice: {
-        provider: "deepgram",
-        voiceId: "thalia",
-        model: "aura-2",
-      },
+        "url": `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
+        "method": "POST",
+        "headers": null,
+        "body": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "description": "",
+              "value": "{{role}}"
+            },
+            "type": {
+              "type": "string",
+              "description": "",
+              "value": "{{type}}"
+            },
+            "level": {
+              "type": "string",
+              "description": "",
+              "value": "{{level}}"
+            },
+            "techstack": {
+              "type": "string",
+              "description": "",
+              "value": "{{techstack}}"
+            },
+            "amount": {
+              "type": "number",
+              "description": "",
+              "value": "{{amount}}"
+            }
+          }
+        }
+      }
     },
     {
-      name: "hangup_1747744730181",
-      type: "hangup",
-      metadata: {
-        position: {
-          x: 76.01267674000721,
-          y: 1272.0665127156606,
-        },
+      "name": "conversation_1748202030787",
+      "type": "conversation",
+      "metadata": {
+        "position": {
+          "x": -449.20642025150823,
+          "y": 723.914481138956
+        }
       },
-    },
+      "prompt": "Thank the user for the conversation and inform them that the inteview has been generated successfully",
+      "model": {
+        "provider": "openai",
+        "model": "gpt-4o",
+        "temperature": 0.7,
+        "maxTokens": 1000
+      },
+      "messagePlan": {
+        "firstMessage": ""
+      }
+    }
   ],
-  edges: [
+  "edges": [
     {
-      from: "apiRequest_1747470739045",
-      to: "conversation_1747721261435",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
+      "from": "start",
+      "to": "conversation_1748201376975",
+      "condition": {
+        "type": "ai",
+        "prompt": "if the user provided all the required variables"
+      }
     },
     {
-      from: "start",
-      to: "conversation_1747744490967",
-      condition: {
-        type: "ai",
-        prompt: "If user provided all the required variables",
-      },
+      "from": "conversation_1748201376975",
+      "to": "apiRequest_1748201470702",
+      "condition": {
+        "type": "ai",
+        "prompt": ""
+      }
     },
     {
-      from: "conversation_1747744490967",
-      to: "apiRequest_1747470739045",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
+      "from": "apiRequest_1748201470702",
+      "to": "conversation_1748202030787",
+      "condition": {
+        "type": "ai",
+        "prompt": ""
+      }
     },
     {
-      from: "conversation_1747721261435",
-      to: "hangup_1747744730181",
-      condition: {
-        type: "ai",
-        prompt: "",
-      },
-    },
-  ],
+      "from": "conversation_1748202030787",
+      "to": "hangup_1747512399374",
+      "condition": {
+        "type": "ai",
+        "prompt": ""
+      }
+    }
+  ]
 };
 
 export const mappings = {

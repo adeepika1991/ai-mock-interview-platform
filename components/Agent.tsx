@@ -116,18 +116,19 @@ const Agent = ({
 
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
-    console.log("Generator object:", generator);
-console.log("User:", { userName, userId });
 
     if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-        variableValues: {
-          username: userName,
-          userid: userId,
+      await vapi.start(undefined,
+        {
+            variableValues: {
+                username: userName,
+                userid: userId,
+            },
+            clientMessages: [],
+            serverMessages: [],
         },
-        clientMessages: [],
-        serverMessages: []
-      });
+        undefined,
+        generator);
     } else {
       let formattedQuestions = "";
       if (questions) {
