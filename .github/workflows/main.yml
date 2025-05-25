@@ -37,3 +37,4 @@ jobs:
         FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
         NEXT_PUBLIC_VAPI_WEB_TOKEN: dummy-key
         GOOGLE_GENERATIVE_AI_API_KEY: dummy-ai-key
+        NEXT_PUBLIC_VAPI_WORKFLOW_ID: dummy-key-vapi
